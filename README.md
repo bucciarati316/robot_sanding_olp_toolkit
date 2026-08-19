@@ -11,6 +11,94 @@
 
 Public repository: [github.com/bucciarati316/robot_sanding_olp_toolkit](https://github.com/bucciarati316/robot_sanding_olp_toolkit)
 
+## 目录 / Contents
+
+- [中文说明](#中文说明)
+- [English documentation](#english-documentation)
+
+## 中文说明
+
+### 项目定位
+
+Robot OLP Toolkit 是一个面向**机器人打磨、抛光、去毛刺和其他表面精加工任务**的离线编程（OLP）工具包，基于 **Pinocchio、PyVista 和 PySide6** 构建。
+
+项目从机器人 URDF、工件 CAD/点云、打磨工具和 TCP 配置出发，帮助用户完成表面跟随刀路、连续逆运动学（IK）、关节约束、碰撞诊断、轨迹验证和三维回放。它用于仿真和工程验证，不是实际机器人控制器，也不是经过安全认证的运动规划器。
+
+### 运行环境
+
+- **操作系统**：Windows + PowerShell
+- **Python**：3.10
+- **环境管理**：Conda，环境文件为 [`environment.yml`](environment.yml)
+- **原生依赖**：Pinocchio、碰撞检测库及其相关二进制组件
+
+当前公开版本以 Windows/Conda 为支持环境，Linux 和 macOS 尚未作为目标环境进行验证。
+
+### 面向打磨任务的典型流程
+
+1. 加载机器人 URDF 和工件 CAD/点云模型。
+2. 配置砂轮/打磨工具、法兰、TCP 偏置和接触姿态。
+3. 生成或导入沿工件表面的打磨刀路，并设置工艺参数。
+4. 对连续位姿序列执行 IK，检查关节限位和构型分支跳变。
+5. 对插值后的轨迹进行碰撞、时间参数化和 TCP/FK 误差检查，再进行回放或导出。
+
+同一套流程也可用于抛光、去毛刺等需要同时关注工具姿态和接触路径的任务。
+
+### 主要内容
+
+- **URDF 工具箱**：URDF 加载、xacro 编译、网格引用检查、网格转换和预览。
+- **打磨 GUI**：机器人/工件场景、工具与 TCP、刀路工艺、IK、轨迹回放和碰撞诊断。
+- **可复用模块**：Pinocchio 运动学、位姿求解、轨迹插值、FCL 碰撞服务、PyVista 渲染和规划适配器。
+- **公开示例机器人**：自有的无网格六轴 URDF，不携带厂商机器人模型。
+- **演示素材**：机器人场景、碰撞高亮、打磨轨迹曲线和 GIF 回放。
+
+### GUI 使用指引
+
+| 界面区域 | 作用 | 首次操作 |
+| --- | --- | --- |
+| 机器人与场景 | 加载机器人、坐标系、CAD 和环境物体 | 加载 `Demo Six Axis` URDF |
+| 工件/点云 | 导入、滤波、裁剪和对齐打磨表面 | 仅测试 URDF 时可跳过 |
+| 工具与 TCP | 配置砂轮/工具、法兰和 TCP 偏置 | 在三维视图中检查接触坐标轴 |
+| 刀路与工艺 | 设置打磨参数并生成表面跟随刀路 | 先使用小范围工件测试 |
+| IK 与关节约束 | 求解连续关节轨迹并检查限位 | 导入位姿/刀路 CSV |
+| 轨迹与回放 | 时间参数化、验证、回放和导出 | 通过验证后再导出 |
+| 碰撞与诊断 | 构建碰撞体并报告碰撞对象 | 重建场景后运行碰撞检查 |
+
+### Windows 启动方式
+
+```powershell
+conda env create -f environment.yml
+conda activate robot-olp-toolkit
+
+# 启动主 GUI
+python -m main_app.main_app
+
+# 启动 URDF 工具箱
+python -m robot_toolkit_main.robot_toolkit_main
+```
+
+已有环境也可以使用：
+
+```powershell
+.\scripts\activate_env.ps1
+python -m main_app.main_app
+```
+
+### URDF 工具箱流程
+
+1. 运行 `python -m robot_toolkit_main.robot_toolkit_main`。
+2. 选择 URDF；公开示例位于 `examples/assets/urdf/demo_six_axis.urdf`。
+3. 如果项目使用 xacro，使用本机可用的 xacro/ROS 工具链进行编译。
+4. 检查网格引用，并对拥有合法授权的网格机器人进行转换和预览。
+5. 在主 GUI 中加载同一个 URDF，继续检查运动学和场景行为。
+
+### 公开范围与安全边界
+
+公开仓库只包含可复用源码、GUI、文档、自有示例 URDF 和演示素材；不包含私有日志、实验数据、验证产物、编辑器设置或厂商机器人 URDF/网格。截图和 GIF 是 GUI 视觉证据，不代表真实机器人已经获得执行许可。正式打磨前仍需针对目标工件完成连续轨迹、碰撞、动力学、TCP/FK 和现场安全验证。
+
+更多英文说明见下方 **English documentation**。第三方资产使用规则见 [`docs/THIRD_PARTY.md`](docs/THIRD_PARTY.md)。
+
+## English documentation
+
 ## Runtime environment
 
 The public workflow is maintained and demonstrated on **Windows with
