@@ -16,7 +16,7 @@ def _import_core():
         ImportError: 如果 core_algorithm 不可用
     """
     try:
-        from core_algorithm import BaseAlgorithm, ParamDef, ParamType
+        from core.core_algorithm import BaseAlgorithm, ParamDef, ParamType
         return BaseAlgorithm, ParamDef, ParamType
     except ImportError:
         raise ImportError("core_algorithm required for IK algorithms")

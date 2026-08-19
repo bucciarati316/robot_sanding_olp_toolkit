@@ -31,7 +31,7 @@ def _import_core():
     parent = Path(__file__).parent.parent
     if str(parent) not in sys.path:
         sys.path.insert(0, str(parent))
-    from core_algorithm import (
+    from core.core_algorithm import (
         BaseAlgorithm, ParamDef, ParamType, ToolpathResult, DataType, DebugItem
     )
     return BaseAlgorithm, ParamDef, ParamType, ToolpathResult, DataType, DebugItem

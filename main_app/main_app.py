@@ -419,7 +419,7 @@ class TrajectoryPlanningWorker(WorkerThread):
         }
 
     def _do_work(self):
-        from schemas import GeometricTrajectory, TransitionRequest
+        from core.schemas import GeometricTrajectory, TransitionRequest
         from collision import SnapshotCollisionService, build_link_fk_provider
         from trajectory import (
             ProcessIKAdapter,
@@ -2174,7 +2174,7 @@ class ToolTCPWidget(StepWidget):
 
     def _on_params_changed(self):
         """参数变化，同步到 tool_library、kinematics_engine 和 render_engine"""
-        from tool_library import ToolData
+        from core.tool_library import ToolData
 
         params = FlangeToolParams()
 
@@ -3448,7 +3448,7 @@ class IKSolveWidget(StepWidget):
         if getattr(self, '_ik_plugins_initialized', False):
             return
         self._ik_plugins_initialized = True
-        from auto_manager import get_manager
+        from core.auto_manager import get_manager
         self._ik_manager = get_manager()
         self._ik_manager.discover_algorithms(prefix="ik")
         names = self._ik_manager.get_all_algorithm_names(prefix="ik")
@@ -3576,7 +3576,7 @@ class IKSolveWidget(StepWidget):
         df.to_csv(tmp_csv, index=False)
 
         output_csv = os.path.join(tmp_dir, "auto_toolpath_pose.csv")
-        from path_sequencer import PathSequencer
+        from core.path_sequencer import PathSequencer
         processor = PathSequencer(
             tmp_csv, output_csv,
             kinematics_engine=self._state.kinematics_engine,
@@ -4779,7 +4779,7 @@ class SimulationWidget(StepWidget):
 
             kin_engine = self._state.kinematics_engine
             solver_name = "SLSQP_update"
-            from auto_manager import get_manager
+            from core.auto_manager import get_manager
             manager = get_manager()
             SolverClass = manager.get_algorithm_class(solver_name, prefix='ik')
             ik_solver_plugin = SolverClass(
@@ -4798,7 +4798,7 @@ class SimulationWidget(StepWidget):
             temp_path = os.path.join(os.getcwd(), "__interp_temp__.csv")
             temp_df.to_csv(temp_path, index=False)
 
-            from interpolation import ThreeSegmentSmoother
+            from core.interpolation import ThreeSegmentSmoother
             smoother = ThreeSegmentSmoother(
                 filepath=temp_path,
                 kin_engine=kin_engine,
@@ -4886,7 +4886,7 @@ class SimulationWidget(StepWidget):
             solver_name = self._strategy_combo.currentData()
             if solver_name is None:
                 solver_name = self._strategy_combo.currentText()
-            from auto_manager import get_manager
+            from core.auto_manager import get_manager
             manager = get_manager()
             SolverClass = manager.get_algorithm_class(solver_name, prefix='ik')
             is_multi = getattr(SolverClass, 'DESC', None) == 'SLSQP_Multi'
@@ -4920,7 +4920,7 @@ class SimulationWidget(StepWidget):
             temp_path = os.path.join(os.getcwd(), "__interp_temp__.csv")
             temp_df.to_csv(temp_path, index=False)
 
-            from interpolation import ThreeSegmentSmoother
+            from core.interpolation import ThreeSegmentSmoother
             smoother = ThreeSegmentSmoother(
                 filepath=temp_path,
                 kin_engine=kin_engine,
