@@ -9,6 +9,8 @@
 ![GUI](https://img.shields.io/badge/GUI-PySide6%20%2B%20PyVista-41CD52)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+Public repository: [github.com/bucciarati316/robot_sanding_olp_toolkit](https://github.com/bucciarati316/robot_sanding_olp_toolkit)
+
 ## Runtime environment
 
 The public workflow is maintained and demonstrated on **Windows with
