@@ -1,39 +1,67 @@
 # Robot OLP Toolkit
 
-> A public, portfolio-ready subset of a robot offline-programming (OLP)
-> workflow built with **Pinocchio**, **PyVista**, and **PySide6**.
+> A public, portfolio-ready offline-programming (OLP) toolkit for **robotic
+> sanding, polishing, deburring, and other surface-finishing tasks**, built
+> with **Pinocchio**, **PyVista**, and **PySide6**.
 
 ![Python 3.10](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
 ![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?logo=windows&logoColor=white)
 ![GUI](https://img.shields.io/badge/GUI-PySide6%20%2B%20PyVista-41CD52)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+## Runtime environment
+
+The public workflow is maintained and demonstrated on **Windows with
+PowerShell**, using **Python 3.10** and a Conda environment created from
+[`environment.yml`](environment.yml). Pinocchio and the collision bindings
+contain native components, so the Windows/Conda setup is the supported path for
+the GUI and URDF toolbox. Linux and macOS are not the tested target environments
+for this public subset.
+
 Robot OLP Toolkit packages the reusable parts of a research-oriented robot
-simulation workflow: URDF inspection, forward/inverse kinematics, toolpath
-processing, collision diagnostics, trajectory validation, and a PySide6 GUI
-for inspecting the results. It is a **simulation and engineering-validation
-toolkit**, not a robot controller or a safety-certified motion planner.
+simulation workflow for robotic sanding and surface finishing. Starting from a
+robot URDF and a workpiece represented by CAD or point-cloud data, it helps
+organize tool/TCP setup, surface-following toolpaths, continuous inverse
+kinematics (IK), collision diagnostics, and trajectory playback. It is a
+**simulation and engineering-validation toolkit**, not a robot controller or a
+safety-certified motion planner.
+
+## Target task: robotic sanding and surface finishing
+
+The public subset is organized around this practical sequence:
+
+1. Load a robot URDF and a CAD/point-cloud workpiece into the scene.
+2. Configure the sanding tool, flange, TCP offset, and contact orientation.
+3. Generate or import a surface-following toolpath with process parameters.
+4. Solve a continuous IK path while monitoring joint limits and branch changes.
+5. Re-check interpolated collision edges, time parameterization, and TCP/FK
+   error before playback or export.
+
+This structure also supports polishing, deburring, and similar tool-surface
+tasks where end-effector orientation and contact path matter as much as
+position.
 
 ## What is included
 
 - **URDF toolbox** — load a URDF, compile xacro when the local ROS/xacro tools
   are available, inspect mesh references, and convert mesh assets for preview.
-- **GUI workflow** — robot and scene setup, tool/TCP configuration, toolpath and
-  IK panels, trajectory playback, and collision diagnostics.
+- **Sanding-oriented GUI workflow** — robot/workpiece setup, abrasive tool and
+  TCP configuration, toolpath and IK panels, trajectory playback, and
+  collision diagnostics.
 - **Reusable Python modules** — Pinocchio kinematics, pose solving, trajectory
   interpolation, FCL-based collision services, rendering helpers, and planner
   adapters.
 - **A public demo robot** — an authored, mesh-free six-axis URDF that keeps the
   default registry runnable without shipping a vendor robot model.
 - **README evidence** — screenshots and a GIF showing the GUI, collision
-  highlighting, trajectory plots, and playback.
+  highlighting, sanding trajectory plots, and playback.
 
 ## Visual demo
 
-The following assets are GUI evidence from the source project. They demonstrate
-the presentation and diagnostic workflow; they are not claims of a certified
-robot trajectory and do not include the vendor model packages used to produce
-the screenshots.
+The following assets are GUI evidence from the source project. They show a
+robot scene, collision diagnostics, a sanding toolpath with joint curves, and
+animated playback. They are not claims of a certified robot trajectory and do
+not include the vendor model packages used to produce the screenshots.
 
 <p align="center">
   <img src="docs/evidence/robot_scene_irb4600.png" alt="Robot scene and FK controls" width="92%">
@@ -44,11 +72,11 @@ the screenshots.
 </p>
 
 <p align="center">
-  <img src="docs/evidence/sanding_trajectory.png" alt="Toolpath and joint trajectory plot" width="92%">
+  <img src="docs/evidence/sanding_trajectory.png" alt="Robotic sanding toolpath and joint trajectory plot" width="92%">
 </p>
 
 <p align="center">
-  <img src="docs/evidence/sanding_playback.gif" alt="Animated trajectory playback" width="92%">
+  <img src="docs/evidence/sanding_playback.gif" alt="Animated robotic sanding trajectory playback" width="92%">
 </p>
 
 ## Quick start on Windows
@@ -93,9 +121,9 @@ native packages for that platform before launching the GUI.
 | Area | Purpose | First action |
 | --- | --- | --- |
 | Robot and scene | Select the robot, coordinate frames, CAD, and environment objects | Load the bundled `Demo Six Axis` URDF |
-| Workpiece / point cloud | Import point clouds, filter, crop, and align data | Skip this page for a URDF-only smoke test |
-| Tool and TCP | Configure tool geometry and flange/TCP offsets | Check the TCP axes in the 3-D view |
-| Toolpath and process | Choose a process parameter set and generate a path | Use a small path before a full workpiece |
+| Workpiece / point cloud | Import the sanding surface, filter, crop, and align data | Skip this page for a URDF-only smoke test |
+| Tool and TCP | Configure the abrasive tool, flange, and TCP offsets | Check the contact/tool axes in the 3-D view |
+| Toolpath and process | Choose sanding/process parameters and generate a surface path | Use a small path before a full workpiece |
 | IK and joint constraints | Solve a continuous joint path and inspect limits | Provide a pose/path CSV or use the previous page |
 | Trajectory and playback | Time-parameterize, validate, play back, and export | Validate before treating a path as usable |
 | Collision and diagnostics | Build collision geometry and report contacts | Rebuild the scene, then run the collision test |
@@ -105,6 +133,20 @@ convergence, a few collision-free samples, or a visually smooth playback are
 not sufficient evidence for real hardware execution. Validate FK/TCP error,
 joint margins, branch continuity, dynamics/time parameterization, and
 interpolated collision edges for the target scene.
+
+## Typical sanding workflow
+
+For a first surface-finishing experiment, use a small CAD patch or point-cloud
+region rather than a complete workpiece. Confirm the following in order:
+
+- the tool frame points along the intended sanding direction and the TCP is at
+  the abrasive contact point;
+- adjacent surface poses produce a continuous joint branch instead of sudden
+  flips;
+- the tool, robot links, workpiece, and environment remain collision-free at
+  the chosen interpolation resolution;
+- the final playback shows the intended contact motion, not merely a reachable
+  sequence of isolated poses.
 
 ## URDF toolbox workflow
 
