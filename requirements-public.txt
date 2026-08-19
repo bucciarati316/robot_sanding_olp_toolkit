@@ -1,0 +1,15 @@
+# Install Pinocchio/HPP-FCL from conda-forge via environment.yml.
+numpy>=1.24
+scipy>=1.10
+pandas>=2.0
+PySide6>=6.5
+pyvista>=0.43
+pyvistaqt>=0.11
+matplotlib>=3.7
+trimesh>=4.0
+PyYAML>=6.0
+open3d>=0.18
+xacro>=2.0
+python-fcl==0.7.0.11
+toppra==0.6.3
+ruckig==0.19.4

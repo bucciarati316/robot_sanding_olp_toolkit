@@ -1,0 +1,40 @@
+# Python caches and test output
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments and secrets
+.venv/
+venv/
+env/
+*.env
+.env
+.env.*
+
+# IDE/editor state (never publish local settings)
+.vscode/
+.idea/
+*.code-workspace
+
+# Generated geometry, logs, exports and local validation data
+generated_stl/
+output/
+outputs/
+local_validation/
+artifacts/
+custom_robots.json
+scene_config.json
+*.log
+*.csv
+*.npz
+*.npy
+*.pkl
+
+# OS metadata
+.DS_Store
+Thumbs.db

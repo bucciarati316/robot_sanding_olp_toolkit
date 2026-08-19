@@ -1,0 +1,22 @@
+name: robot-olp-toolkit
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy>=1.24
+  - scipy>=1.10
+  - pandas>=2.0
+  - pinocchio>=3.0
+  - pyside6>=6.5
+  - pyvista>=0.43
+  - pyvistaqt>=0.11
+  - matplotlib>=3.7
+  - trimesh>=4.0
+  - pyyaml>=6.0
+  - pip
+  - pip:
+      - open3d>=0.18
+      - xacro>=2.0
+      - python-fcl==0.7.0.11
+      - toppra==0.6.3
+      - ruckig==0.19.4

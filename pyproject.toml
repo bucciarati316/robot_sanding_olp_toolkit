@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robot-olp-toolkit"
+version = "0.1.0"
+description = "Public Pinocchio and PyVista toolkit for robot offline programming demos"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "bucciarati316" }]
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "pandas>=2.0",
+  "PySide6>=6.5",
+  "pyvista>=0.43",
+  "pyvistaqt>=0.11",
+  "matplotlib>=3.7",
+  "trimesh>=4.0",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+native = [
+  "pinocchio>=3.0",
+  "python-fcl==0.7.0.11",
+]
+tooling = [
+  "open3d>=0.18",
+  "xacro>=2.0",
+  "toppra==0.6.3",
+  "ruckig==0.19.4",
+]
+
+[tool.setuptools.packages.find]
+include = [
+  "core*",
+  "main_app*",
+  "render_engine*",
+  "robot_toolkit_main*",
+  "collision*",
+  "algorithms*",
+  "trajectory*",
+  "plotting*",
+  "apps*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
