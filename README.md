@@ -160,7 +160,9 @@ licensed CAD, and the native Pinocchio/FCL versions installed on the machine.
 
 ## License
 
-The original source code, documentation, authored demo URDF, and committed
-presentation assets are released under the [MIT License](LICENSE). External
-URDFs, meshes, point clouds, and other assets loaded by a user keep their own
-licenses and attribution requirements.
+The original source code, documentation, and authored demo URDF are released
+under the [MIT License](LICENSE). The files in `docs/evidence/` are GUI visual
+evidence; if a screenshot depicts a third-party robot or CAD asset, that asset
+is not relicensed by this repository. External URDFs, meshes, point clouds,
+and other assets loaded by a user keep their own licenses and attribution
+requirements.
