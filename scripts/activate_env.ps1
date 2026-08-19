@@ -34,7 +34,7 @@ $resolvedEnv = (Resolve-Path -LiteralPath $EnvPath).Path
 . $hookPath
 conda activate $resolvedEnv
 
-python -c "import PySide6, pyvista, scipy, toppra, ruckig; print('Runtime dependencies: OK')"
+python -c "import PySide6, pyvista, scipy, toppra, ruckig, pinocchio; print('Runtime dependencies: OK')"
 if ($LASTEXITCODE -ne 0) {
     throw 'The environment is active, but required runtime dependencies are incomplete.'
 }
